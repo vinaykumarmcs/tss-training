@@ -8,12 +8,13 @@ import java.util.regex.Pattern;
 
 public class Utility {
 	/**
-	 * @author vinay
-	 * @since 2022/01/04
-	 * @param String email - validateEmail(to validate given email address)
-	 * @param String number - isValidMobileNo(to validate the given mobile number)
-	 * @param Object obj - isBlank(check the given value is blank)
-	 * @param int    length - otpGenerator(generates random otp of 4 digit)
+	 * 
+	 * @author vinay kumar
+	 * @since 2022/01/05
+	 * @param String email validateEmail
+	 * @return boolean
+	 * 
+	 * description: This method is used to validate given email address
 	 */
 	public static boolean validateEmail(String email) {
 		if (isBlank(email)) {
@@ -24,6 +25,13 @@ public class Utility {
 		return pattern.matcher(email).matches();
 	}
 
+	/**@author vinay kumar
+	 * @param String number - isValidMobileNo
+	 * @since 2022/01/05
+	 * @return boolean
+	 * 
+	 * description:This method is used to validate the given mobile number
+	 */
 	public static boolean isValidMobileNo(String number) {
 		if (isBlank(number)) {
 			return false;
@@ -33,6 +41,13 @@ public class Utility {
 		return (match.find() && match.group().equals(number));
 	}
 
+	/**@author vinay
+	 * @paramObject obj - isBlank
+	 * @since2022/01/06
+	 * @return boolean
+	 * 
+	 * description:This method is used to check the given value is blank
+	 */
 	public static boolean isBlank(Object obj) {
 		if (obj == null)
 			return true;
@@ -59,11 +74,22 @@ public class Utility {
 		return false;
 	}
 
+	/**@author vinay kumar
+	 * @since 2022/01/07
+	 * description:This is a main method
+	 */
 	public static void main(String[] args) {
 		int a[] = {};
 		System.out.println(Utility.isBlank(a));
 	}
 
+	/**@author vinay
+	 * @paramint    length - otpGenerator(generates random otp of 4 digit)
+	 * @since 2022/01/10
+	 * @return int
+	 * 
+	 * description:This method is used to generate random otp
+	 */
 	public static int otpGenerator(int length) {
 		Random random = new Random();
 		int otp = random.nextInt(length);
