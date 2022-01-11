@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Utility {
-
 	/**
 	 * @author vinay
 	 * @since 2022/01/04
@@ -58,22 +57,16 @@ public class Utility {
 		else if (obj instanceof Byte)
 			return ((Byte) (obj) <= 0);
 		return false;
-
 	}
 
 	public static void main(String[] args) {
 		int a[] = {};
-
 		System.out.println(Utility.isBlank(a));
 	}
 
-	public static char[] otpGenerator(int length) {
-		String numbers = "1234567890";
+	public static int otpGenerator(int length) {
 		Random random = new Random();
-		char[] otp = new char[length];
-		for (int i = 0; i < length; i++) {
-			otp[i] = numbers.charAt(random.nextInt(numbers.length()));
-		}
+		int otp = random.nextInt(length);
 		return otp;
 	}
 }

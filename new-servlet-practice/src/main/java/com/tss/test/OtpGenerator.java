@@ -15,12 +15,11 @@ import com.tss.util.Utility;
 public class OtpGenerator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		String number = request.getParameter("number");
 		PrintWriter out = response.getWriter();
-		if (Utility.isValidMobileNo(number)) {
-			out.print(Utility.otpGenerator(4));
+		if (Utility.isValidMobileNo(request.getParameter("number"))) {
+			out.print(Utility.otpGenerator(10000));
 		} else {
 			out.print("<center><h2> Invalid Credentials</h2></center>");
 		}

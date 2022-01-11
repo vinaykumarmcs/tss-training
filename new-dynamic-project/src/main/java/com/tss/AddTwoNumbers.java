@@ -1,15 +1,16 @@
-package com.tss.test;
+package com.tss;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/Addition")
-public class Addition extends GenericServlet {
+@WebServlet("/AddTwoNumbers")
+public class AddTwoNumbers extends GenericServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,5 +22,6 @@ public class Addition extends GenericServlet {
 		int sum = numOne + numTwo;
 		PrintWriter output = response.getWriter();
 		output.println("The Answer :" + sum);
+
 	}
 }
