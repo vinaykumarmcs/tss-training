@@ -1,20 +1,26 @@
 package com.tss.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.Part;
+
 public class Utility {
 	/**
 	 * 
 	 * @author vinay kumar
-	 * @since 2022/01/05
+	 * @since 2022/01/07
 	 * @param String email validateEmail
 	 * @return boolean
 	 * 
-	 * description: This method is used to validate given email address
+	 *         description: This method is used to validate given email address
 	 */
 	public static boolean validateEmail(String email) {
 		if (isBlank(email)) {
@@ -25,12 +31,13 @@ public class Utility {
 		return pattern.matcher(email).matches();
 	}
 
-	/**@author vinay kumar
+	/**
+	 * @author vinay kumar
 	 * @param String number - isValidMobileNo
-	 * @since 2022/01/05
+	 * @since 2022/01/07
 	 * @return boolean
 	 * 
-	 * description:This method is used to validate the given mobile number
+	 *         description:This method is used to validate the given mobile number
 	 */
 	public static boolean isValidMobileNo(String number) {
 		if (isBlank(number)) {
@@ -41,12 +48,12 @@ public class Utility {
 		return (match.find() && match.group().equals(number));
 	}
 
-	/**@author vinay
-	 * @paramObject obj - isBlank
-	 * @since2022/01/06
+	/**
+	 * @author vinay
+	 * @paramObject obj - isBlank @since2022/01/07
 	 * @return boolean
 	 * 
-	 * description:This method is used to check the given value is blank
+	 *         description:This method is used to check the given value is blank
 	 */
 	public static boolean isBlank(Object obj) {
 		if (obj == null)
@@ -71,28 +78,50 @@ public class Utility {
 			return ((Short) (obj) <= 0);
 		else if (obj instanceof Byte)
 			return ((Byte) (obj) <= 0);
+		else if (obj instanceof File)
+			return ((File) (obj) == null);
 		return false;
 	}
 
-	/**@author vinay kumar
-	 * @since 2022/01/07
-	 * description:This is a main method
+	/**
+	 * @author vinay kumar
+	 * @since 2022/01/07 description:This is a main method
 	 */
 	public static void main(String[] args) {
-		int a[] = {};
-		System.out.println(Utility.isBlank(a));
+
+		File f =new File("F:\\Upload\\" );
+		System.out.println(Utility.isBlank(f));
 	}
 
-	/**@author vinay
-	 * @paramint    length - otpGenerator(generates random otp of 4 digit)
+	/**
+	 * @author vinay
+	 * @paramint length - otpGenerator(generates random otp of 4 digit)
 	 * @since 2022/01/10
 	 * @return int
 	 * 
-	 * description:This method is used to generate random otp
+	 *         description:This method is used to generate random otp
 	 */
 	public static int otpGenerator(int length) {
 		Random random = new Random();
 		int otp = random.nextInt(length);
 		return otp;
+	}
+	/**
+	 * @author vinay
+	 * @param filePart
+	 * @since 2022/01/11
+	 * @return int
+	 * 
+	 *         description:This method is used to upload file
+	 */
+	
+	public static boolean fileUpload(Part filePart) throws IOException {
+		if (isBlank(filePart)) {
+			return false;
+		}
+		String fileName = filePart.getSubmittedFileName();
+		File file = new File("F:\\Upload\\" + File.separator + fileName);
+		Files.copy(filePart.getInputStream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		return true;
 	}
 }
