@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/AddTwoNumbers")
 public class AddTwoNumbers extends GenericServlet {
-
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -22,6 +21,5 @@ public class AddTwoNumbers extends GenericServlet {
 		int sum = numOne + numTwo;
 		PrintWriter output = response.getWriter();
 		output.println("The Answer :" + sum);
-
 	}
 }

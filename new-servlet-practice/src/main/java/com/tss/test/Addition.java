@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/Addition")
 public class Addition extends GenericServlet {
-
 	private static final long serialVersionUID = 1L;
 
 	@Override

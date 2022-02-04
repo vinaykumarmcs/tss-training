@@ -1,7 +1,6 @@
 package com.tss;
 
 public class Addition {
-	
 	public static int add() {
 		int firstNum = 10;
 		int secondNum = 20;

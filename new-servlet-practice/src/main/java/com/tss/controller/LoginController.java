@@ -13,17 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doget(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		PrintWriter out = response.getWriter();
-		if (email.equals("vinaykumar") && password.equals("vinay")) {
-			out.println("<html><body><h1 align ='center'> Welcome <h1></body></html>");
-		} else {
-			out.println("<html><body><h1 align ='center'> error <h1></body></html>");
-		}
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -34,5 +23,4 @@ public class LoginController extends HttpServlet {
 			out.println("<html><body><h1 align ='center'> error <h1></body></html>");
 		}
 	}
-
 }
