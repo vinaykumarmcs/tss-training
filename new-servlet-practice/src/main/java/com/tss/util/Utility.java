@@ -6,9 +6,18 @@ import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Part;
@@ -80,7 +89,7 @@ public class Utility {
 		else if (obj instanceof Byte)
 			return ((Byte) (obj) <= 0);
 		else if (obj instanceof File)
-			return ((File) (obj) == null);
+			return (((String) obj).trim().isEmpty());
 		return false;
 	}
 
@@ -90,11 +99,11 @@ public class Utility {
 	 * @author vinay kumar
 	 * @since 2022/01/07 description:This is a main method
 	 */
-	public static void main(String[] args) {
-
-		File value = new File("F:\\Upload\\");
-		System.out.println(Utility.isBlank(value));
-	}
+//	public static void main(String[] args) {
+//
+//		File value = new File("F:\\Upload\\");
+//		System.out.println(Utility.isBlank(value));
+//	}
 
 	/**
 	 * This method is used to generate random otp
@@ -297,4 +306,271 @@ public class Utility {
 		}
 		return convert.toString();
 	}
+
+	/**
+	 * This method generate alphanumeric otp
+	 * 
+	 * @author vinay
+	 * @param int
+	 * @since 2022/02/03
+	 * @return String
+	 */
+	public static String generateAlphanumeric(int length) {
+		if (Utility.isBlank(length) || length < 4 || length > 12) {
+			return null;
+		}
+		int i = 0;
+		String alphabet = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		StringBuilder str = new StringBuilder();
+		SecureRandom random = new SecureRandom();
+		while (i < length) {
+			int index = random.nextInt(alphabet.length());
+			char randomChar = alphabet.charAt(index);
+			str.append(randomChar);
+			i++;
+
+		}
+		return str.toString();
 	}
+
+	/**
+	 * This method generate alphanumeric otp
+	 * 
+	 * @author vinay
+	 * @param int
+	 * @since 2022/02/03
+	 * @return String
+	 */
+	public static ArrayList<String> generateAlphanumeric(int length, int count) {
+		ArrayList<String> value = new ArrayList<String>();
+		if (Utility.isBlank(count)) {
+			return null;
+		}
+		for (int j = 0; j < count; j++) {
+			value.add(generateAlphanumeric(length));
+		}
+		return value;
+	}
+
+	/**
+	 * This method returns date format to given date format
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @param String
+	 * @since 2022/02/09
+	 * @return String
+	 */
+	public static String dateOne(String format) {
+		DateTimeFormatter form = DateTimeFormatter.ofPattern(format);
+		LocalDateTime now = LocalDateTime.now();
+		return form.format(now);
+	}
+
+	/**
+	 * This method returns given date format to java date format
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @param String
+	 * @since 2022/02/09
+	 * @return date
+	 * @throws ParseException
+	 */
+	public static String dateTwo(String dateGiven, String formatGiven, String strFormat) throws ParseException {
+		if (Utility.isBlank(strFormat)) {
+			return null;
+		}
+		Date date = new SimpleDateFormat(formatGiven).parse(dateGiven);
+		return new SimpleDateFormat(strFormat).format(date);
+	}
+
+	/**
+	 * This method returns No of days, months ,years as per the given data and date
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @param String
+	 * @since 2022/02/09
+	 * @return int
+	 */
+	public static int age(String data, String date) {
+		if (isBlank(data) || isBlank(date)) {
+			return 0;
+		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		Period age = Period.between(LocalDate.parse(date, formatter), LocalDate.now());
+		switch (data) {
+		case "years":
+			return (age.getYears());
+		case "months": {
+			return ((age.getMonths()) + (age.getYears() * 12));
+		}
+		case "days": {
+			return ((age.getYears() * 365) + (age.getMonths() * 30) + (age.getDays()));
+		}
+		}
+		return 0;
+	}
+
+	/**
+	 * This method returns no of days in the month
+	 * 
+	 * @author vinay
+	 * @param int
+	 * @since 2022/02/09
+	 * @return int
+	 */
+	public static int noOfDays(int month) {
+		if (isBlank(month)) {
+			return 0;
+		}
+		LocalDate localDate = LocalDate.of(2022, month, 01);
+		return localDate.lengthOfMonth();
+	}
+
+	/**
+	 * This method returns time taken to execute the program in milliseconds
+	 * 
+	 * @author vinay
+	 * @since 2022/02/09
+	 * @return long
+	 */
+	public static long RunTimeCalculation() {
+		long startTime = System.currentTimeMillis();
+		for (int i = 0; i < 10000; i++) {
+			System.out.println(i);
+		}
+		return System.currentTimeMillis() - startTime;
+	}
+
+	/**
+	 * This method checks if the year is leap year and returns the day of 29th feb
+	 * 
+	 * @author vinay
+	 * @param int
+	 * @since 2022/02/13
+	 * @return String
+	 */
+	public static String dayInLeapYear(int year) throws ParseException {
+		final int DATE = 29;
+		final int MONTH = 02;
+		if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			Date myDate = dateFormat.parse(DATE + "/" + MONTH + "/" + year);
+			dateFormat.applyPattern("EEEE");
+			return dateFormat.format(myDate);
+		} else {
+			return "given year is not a leap year";
+		}
+	}
+
+	/**
+	 * This method removes extra spaces in a given string
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @since 2022/02/21
+	 * @return String
+	 */
+	public static String removeExtraSpaces(String data) {
+		if (isBlank(data)) {
+			return null;
+		}
+		return data.replaceAll("\\s+", " ").trim();
+	}
+
+	/**
+	 * This method generates given number of zeros
+	 * 
+	 * @author vinay
+	 * @param int
+	 * @since 2022/02/21
+	 * @return String
+	 */
+	public static String generateZeros(int count) {
+		if (isBlank(count)) {
+			return null;
+		}
+		return String.format("%0" + count + "d", 0);
+	}
+
+	/**
+	 * This method removes special characters and extra from a given string
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @since 2022/02/21
+	 * @return String
+	 */
+	public static String replaceSpecialCharacters(String data) {
+		if (isBlank(data)) {
+			return null;
+		}
+		return data.replaceAll("[^a-zA-Z0-9]+\\s+", " ");
+	}
+
+	public static String extractIdFromUrl(String url) {
+
+		String regex = "\\/d\\/(.*?)(\\/|$)";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(url);
+		while (matcher.find()) {
+		}
+		return matcher.group();
+	}
+
+	/**
+	 * This method removes special characters and extra from a given string
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @since 2022/02/21
+	 * @return String
+	 */
+	public static String extractYoutubeUrlId(String url) {
+		if (isBlank(url)) {
+			return null;
+		}
+		String regex = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(url);
+		while (matcher.find()) {
+			return "https://www.youtube.com/embed/" + matcher.group();
+		}
+		return "";
+	}
+
+	/**
+	 * This method validates given ip address
+	 * 
+	 * @author vinay
+	 * @param String
+	 * @since 2022/02/22
+	 * @return boolean
+	 */
+	public static boolean isValidIpAddress(String ipAddress) {
+		if (isBlank(ipAddress)) {
+			return false;
+		}
+		String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
+		String ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}";
+		Pattern ipv4 = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
+		Pattern ipv6 = Pattern.compile(ipv6Pattern, Pattern.CASE_INSENSITIVE);
+		Matcher ipv4Matcher = ipv4.matcher(ipAddress);
+		if (ipv4Matcher.matches()) {
+			return true;
+		}
+		Matcher ipv6Matcher = ipv6.matcher(ipAddress);
+		if (ipv6Matcher.matches()) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void main(String[] args) {
+//		System.out.println(extractYoutubeUrlId("http://www.youtube.com/watch?v=0zM4nApSvMg#t=0m10s"));
+//		System.out.println(SampleIp.isIpAddress("2001:0db8:85a3:0000:0000:8a2e:0370:7334"));
+//		System.out.println(SampleIp.isIpAddress("103.5.134.75"));
+	}
+}
