@@ -18,7 +18,7 @@ public class DbMain {
 //		System.out.println(DbUtil.getGeneratedKey(connection, "INSERT INTO customer(name, address, phone_no)" + "VALUES(?, ?, ?)", "ramu","bangalore", "7022515845"));
 //		System.out.println(DbUtil.get(connection, "SELECT * FROM customer where pk_id=?",3));
 //		System.out.println(DbUtil.update(connection, "UPDATE customer SET name=? WHERE pk_id=2", "ramesh"));
-//		System.out.println(DbUtil.getMapList(connection, "SELECT * FROM customer"));
+//		System.out.println(DbUtil.getMapList(connection, "SELECT * FROM app_menu"));
 //		List<List<Object>> list = new ArrayList<List<Object>>();
 //		List<Object> listOne = new ArrayList<Object>();
 //		listOne.add("david");

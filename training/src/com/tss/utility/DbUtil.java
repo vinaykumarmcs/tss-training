@@ -17,8 +17,7 @@ public class DbUtil {
 	public static Connection getConnection(String host, int port, String schema, String userName, String password)
 			throws SQLException, ClassNotFoundException {
 		Connection connection = null;
-		connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + schema, userName,
-				password);
+		connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + schema, userName,password);
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		connection.setAutoCommit(false);
 		return connection;

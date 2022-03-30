@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DbUtility {
+public class DbUtil {
 
 	public static Connection getConnection(String host, int port, String schema, String userName, String password)
 			throws SQLException, ClassNotFoundException {

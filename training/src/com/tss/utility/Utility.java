@@ -549,6 +549,31 @@ public class Utility {
 		return false;
 	}
 
+//	public static boolean isAlphaNumeric(String input) {
+//		return input.matches("^[ A-Za-z0-9_@./#&+-]*$");
+//	}
+
+	/**
+	 * This method validates and checks if the given string is alphanumeric.
+	 * 
+	 * @author vinay
+	 * @param string
+	 * @since 09/03/2022
+	 * @return boolean
+	 */
+	public static boolean isAlphaNumeric(String input) {
+		if (isBlank(input)) {
+			return false;
+		}
+		Pattern pattern = Pattern.compile(
+				"^(?=.)(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9])(?=.+[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{6,}$");
+		Matcher matcher = pattern.matcher(input);
+		if (matcher.matches()) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * @author vinay
 	 * @param args
@@ -598,5 +623,6 @@ public class Utility {
 //		System.out.println(extractYoutubeUrlId("http://www.youtube.com/watch?v=0zM4nApSvMg#t=0m10s"));
 //		System.out.println(SampleIp.isIpAddress("2001:0db8:85a3:0000:0000:8a2e:0370:7334"));
 //		System.out.println(SampleIp.isIpAddress("103.5.134.75"));
+		System.out.println(isAlphaNumeric("vAi4;@#1"));
 	}
 }
